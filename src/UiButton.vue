@@ -83,13 +83,17 @@ export default {
     href: String,
     color: {
       type: String,
-      default: "default", // 'default', 'primary', 'accent', 'green', 'orange', or 'red'
+      default: "default", // 'default', 'primary', 'accent', 'green', 'orange', 'red', or 'purple'
     },
     size: {
       type: String,
-      default: "normal", // 'small', 'normal', 'large'
+      default: "normal", // 'small', 'normal', 'medium', 'large'
     },
     raised: {
+      type: Boolean,
+      default: false,
+    },
+    fullWidth: {
       type: Boolean,
       default: false,
     },
@@ -149,6 +153,7 @@ export default {
         { "is-loading": this.loading },
         { "is-disabled": this.disabled || this.loading },
         { "has-dropdown": this.hasDropdown },
+        { "ui-button--full-width": this.fullWidth },
       ];
     },
 
@@ -159,6 +164,10 @@ export default {
     progressColor() {
       if (this.color === "default" || this.type === "secondary") {
         return "black";
+      }
+
+      if (this.color === "purple") {
+        return "white";
       }
 
       return "white";
@@ -363,6 +372,31 @@ export default {
   }
 }
 
+.ui-button--size-medium {
+  font-size: $ui-button-font-size--medium;
+  height: $ui-button-height--medium;
+  padding-left: rem(16px);
+  padding-right: rem(16px);
+
+  .ui-button__icon {
+    margin-left: rem(-4px);
+    margin-right: rem(6px);
+  }
+
+  .ui-button__dropdown-icon {
+    font-size: rem(20px);
+    margin-left: rem(2px);
+    margin-right: rem(-6px);
+  }
+
+  &.ui-button--icon-position-right {
+    .ui-button__icon {
+      margin-left: rem(6px);
+      margin-right: rem(-4px);
+    }
+  }
+}
+
 .ui-button--size-large {
   font-size: $ui-button-font-size--large;
   height: $ui-button-height--large;
@@ -385,6 +419,10 @@ export default {
       margin-right: rem(-4px);
     }
   }
+}
+
+.ui-button--full-width {
+  width: 100%;
 }
 
 // ================================================
@@ -419,7 +457,8 @@ export default {
   &.ui-button--color-accent,
   &.ui-button--color-green,
   &.ui-button--color-orange,
-  &.ui-button--color-red {
+  &.ui-button--color-red,
+  &.ui-button--color-purple {
     color: white;
 
     .ui-ripple-ink__ink {
@@ -469,6 +508,15 @@ export default {
     &:hover:not(.is-disabled),
     &.has-dropdown-open {
       background-color: darken($md-red, 10%);
+    }
+  }
+
+  &.ui-button--color-purple {
+    background-color: $brand-purple-color;
+
+    &:hover:not(.is-disabled),
+    &.has-dropdown-open {
+      background-color: darken($brand-purple-color, 10%);
     }
   }
 }
@@ -555,6 +603,19 @@ export default {
 
     .ui-button__focus-ring::before {
       background-color: rgba($md-red, 0.26);
+    }
+  }
+
+  &.ui-button--color-purple {
+    color: $brand-purple-color;
+
+    &:hover:not(.is-disabled),
+    &.has-dropdown-open {
+      background-color: rgba($brand-purple-color, 0.12);
+    }
+
+    .ui-button__focus-ring::before {
+      background-color: rgba($brand-purple-color, 0.26);
     }
   }
 }
